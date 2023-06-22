@@ -104,30 +104,43 @@ int main() {
     Date dataDefault;
     cout << "Data di Default: " << dataDefault << endl;
 
-    Date dataCustom(20, 6, 2023);
+    Date dataCustom(20, 6, 2023);  
     cout << "Data Customizzata: " << dataCustom << endl;
 
     // Prove di funzionamento dei metodi addDays(), addMonths(), addYears()
-    dataCustom.addDays(10);
-    if(dataCustom.day() != 30) {
-        cout << "[FAIL] addDays(10)" << endl;
-    } else {
-        cout << "[OK] addDays(10): " << dataCustom << endl;
-    }
+    {
+        int testDay = 10;
 
-    dataCustom.addMonths(2);
-    if(dataCustom.month() != 8) {
-        cout << "[FAIL] addMonths(2)" << endl;
-    } else {
-        cout << "[OK] addMonths(2): " << dataCustom << endl;
+        dataCustom.addDays(testDay);
+        if(dataCustom.day() != 30) {
+            cout << "[FAIL] addDays(10)" << endl;
+        } else {
+            cout << "[OK] addDays(10): " << dataCustom << endl;
+        }
     }
+    
+    {
+        int testMonth = 2;
 
-    dataCustom.addYears(-1);
-    if(dataCustom.year()!=2022) {
-        cout << "[FAIL] addYears(-1)" << endl;
-    } else {
-        cout << "[OK] addYears(-1): " << dataCustom << endl;
+        dataCustom.addMonths(testMonth);
+        if(dataCustom.month() != 8) {
+            cout << "[FAIL] addMonths(2)" << endl;
+        } else {
+            cout << "[OK] addMonths(2): " << dataCustom << endl;
+        }
     }
+    
+    {
+        int testYear = -1;
+
+        dataCustom.addYears(testYear);
+        if(dataCustom.year()!=2022) {
+            cout << "[FAIL] addYears(-1)" << endl;
+        } else {
+            cout << "[OK] addYears(-1): " << dataCustom << endl;
+        }   
+    }
+    
 
     return 0;
 }
