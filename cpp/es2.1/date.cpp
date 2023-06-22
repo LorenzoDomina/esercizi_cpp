@@ -141,6 +141,44 @@ int main() {
         }   
     }
     
+    Date dataCustom2(28, 2,2023);
+    cout << "Data Customizzata 2: " << dataCustom2 << endl;
+    {
+        int testDay2 = 1;
+
+        dataCustom2.addDays(testDay2);
+        if(dataCustom2.day() != 1 || dataCustom2.month() != 3 || dataCustom2.year() != 2023) {
+            cout << "[FAIL] addDays(1)" << endl;
+        } else {
+            cout << "[OK] addDays(1): " << dataCustom2 << endl;
+        }
+    }
+
+    Date dataCustom3(31, 1, 2023);
+    cout << "Data Customizzata 3: " << dataCustom2 << endl;
+    {
+        int testMonth3 = 1;
+
+        dataCustom3.addMonths(testMonth3);
+        if(dataCustom3.day() != 28 || dataCustom3.month() != 2 || dataCustom3.year() != 2023) {
+            cout << "[FAIL] addMonths(1)" << endl;
+        } else {
+            cout << "[OK] addMonths(1): " << dataCustom3 << endl;
+        }
+    }
+
+    Date dataCustom4(31, 8, 2023);
+    cout << "Data Customizzata 4: " << dataCustom4 << endl;
+    {
+        int testMonth4 = 3;
+
+        dataCustom4.addMonths(testMonth4);
+        if(dataCustom4.day() != 30 || dataCustom4.month() != 11 || dataCustom4.year() != 2023) {
+            cout << "[FAIL] addMonths(3)" << endl;
+        } else {
+            cout << "[OK] addMonths(3): " << dataCustom4 << endl;
+        }
+    }
 
     return 0;
 }
