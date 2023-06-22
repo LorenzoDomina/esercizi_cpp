@@ -23,6 +23,7 @@ int main()
         }
     } while (choice == 1);
 
+    //Controlla se 'v' è vuoto, se non è vuoto entra nell'if
     if (!v.empty())
     {
         sort(v.begin(), v.end());
@@ -30,6 +31,7 @@ int main()
         int size = v.size();
         double median;
 
+        //controllo se 'v' ha indice pari o dispari
         if (size % 2 == 0)
         {
             median = static_cast<double>(v[size / 2 - 1] + v[size / 2]) / 2;
