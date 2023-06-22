@@ -8,38 +8,38 @@ int main()
 {
     vector<int> v;
     int n;
-    int scelta;
+    int choice;
 
     do
     {
         cout << "Vuoi inserire un numero? (1-si / 2-no): ";
-        cin >> scelta;
+        cin >> choice;
 
-        if (scelta == 1)
+        if (choice == 1)
         {
             cout << "inserisci un numero: ";
             cin >> n;
             v.push_back(n);
         }
-    } while (scelta == 1);
+    } while (choice == 1);
 
     if (!v.empty())
     {
         sort(v.begin(), v.end());
 
         int size = v.size();
-        double mediana;
+        double median;
 
         if (size % 2 == 0)
         {
-            mediana = static_cast<double>(v[size / 2 - 1] + v[size / 2]) / 2;
+            median = static_cast<double>(v[size / 2 - 1] + v[size / 2]) / 2;
         }
         else
         {
-            mediana = static_cast<double>(v[size / 2]);
+            median = static_cast<double>(v[size / 2]);
         }
 
-        cout << "La mediana dei numeri inseriti é " << mediana << endl;
+        cout << "La median dei numeri inseriti é " << median << endl;
     }
     else
     {
