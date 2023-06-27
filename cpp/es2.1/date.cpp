@@ -114,17 +114,14 @@ private:
 
 int main()
 {
-    Date dataDefault;
-    cout << "Data di Default: " << dataDefault << endl;
-
-    Date dataCustom(20, 6, 2023);
-    cout << "Data Customizzata: " << dataCustom << endl;
+    cout << "Data Customizzata 1: "
+         << "20/06/2023" << endl;
 
     // Prove di funzionamento dei metodi addDays(), addMonths(), addYears()
     {
-        int testDay = 10;
+        Date dataCustom(20, 6, 2023);
 
-        dataCustom.addDays(testDay);
+        dataCustom.addDays(10);
         if (dataCustom.day() != 30)
         {
             cout << "[FAIL] addDays(10)" << endl;
@@ -136,9 +133,9 @@ int main()
     }
 
     {
-        int testMonth = 2;
+        Date dataCustom(20, 6, 2023);
 
-        dataCustom.addMonths(testMonth);
+        dataCustom.addMonths(2);
         if (dataCustom.month() != 8)
         {
             cout << "[FAIL] addMonths(2)" << endl;
@@ -150,16 +147,18 @@ int main()
     }
 
     {
-        int testYear = -1;
+        Date dataCustom(20, 6, 2023);
 
-        dataCustom.addYears(testYear);
+        dataCustom.addYears(-1);
         if (dataCustom.year() != 2022)
         {
-            cout << "[FAIL] addYears(-1)" << endl;
+            cout << "[FAIL] addYears(-1)" << endl
+                 << endl;
         }
         else
         {
-            cout << "[OK] addYears(-1): " << dataCustom << endl;
+            cout << "[OK] addYears(-1): " << dataCustom << endl
+                 << endl;
         }
     }
 
@@ -170,11 +169,13 @@ int main()
         dataCustom2.addDays(1);
         if (dataCustom2.day() != 1 || dataCustom2.month() != 3 || dataCustom2.year() != 2023)
         {
-            cout << "[FAIL] addDays(1)" << endl;
+            cout << "[FAIL] addDays(1)" << endl
+                 << endl;
         }
         else
         {
-            cout << "[OK] addDays(1): " << dataCustom2 << endl;
+            cout << "[OK] addDays(1): " << dataCustom2 << endl
+                 << endl;
         }
     }
 
@@ -185,11 +186,13 @@ int main()
         dataCustom2.addMonths(1);
         if (dataCustom2.day() != 28 || dataCustom2.month() != 2 || dataCustom2.year() != 2023)
         {
-            cout << "[FAIL] addMonths(1)" << endl;
+            cout << "[FAIL] addMonths(1)" << endl
+                 << endl;
         }
         else
         {
-            cout << "[OK] addMonths(1): " << dataCustom2 << endl;
+            cout << "[OK] addMonths(1): " << dataCustom2 << endl
+                 << endl;
         }
     }
 
@@ -200,11 +203,13 @@ int main()
         dataCustom2.addMonths(3);
         if (dataCustom2.day() != 30 || dataCustom2.month() != 11 || dataCustom2.year() != 2023)
         {
-            cout << "[FAIL] addMonths(3)" << endl;
+            cout << "[FAIL] addMonths(3)" << endl
+                 << endl;
         }
         else
         {
-            cout << "[OK] addMonths(3): " << dataCustom2 << endl;
+            cout << "[OK] addMonths(3): " << dataCustom2 << endl
+                 << endl;
         }
     }
 
