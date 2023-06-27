@@ -8,11 +8,6 @@
 
 using namespace std;
 
-bool frequenzaParole(const pair<string, int> &a, const pair<string, int> &b)
-{
-    return a.second > b.second;
-}
-
 int main()
 {
     string nomeFile = "/home/user/Documenti/esercizi/cpp/es1.3/canto1.txt";
@@ -47,6 +42,11 @@ int main()
         cout << "Nessuna parola rilevata nel file." << endl;
         return 0;
     }
+
+    auto frequenzaParole = [](const pair<string, int> &a, const pair<string, int> &b)
+    {
+        return a.second > b.second;
+    };
 
     vector<pair<string, int>> freqParoleVector(freqParole.begin(), freqParole.end());
 
