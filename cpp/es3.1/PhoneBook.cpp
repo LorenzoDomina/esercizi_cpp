@@ -1,5 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <functional>
+#include <sstream>
+#include <string>
 
 using namespace std;
 
@@ -7,7 +10,14 @@ struct Contact
 {
     string nome;
     string cognome;
+    string prefisso;
     string numTelefono;
+};
+
+class AbstractFilter
+{
+public:
+    virtual bool accept(const Contact &contatto) const = 0;
 };
 
 class PhoneBook
@@ -33,49 +43,16 @@ public:
         return nullptr;
     }
 
-    vector<Contact> filter(int scelta)
+    vector<Contact> filter(const AbstractFilter &filter)
     {
         vector<Contact> rubricaFiltrata;
 
-        switch (scelta)
+        for (const auto &contatto : contatti)
         {
-        case 1:
-            char letteraIniziale;
-            cout << endl
-                 << "Inserire la lettera iniziale per cui applicare il filtro: ";
-            cin >> letteraIniziale;
-
-            for (const auto &contatto : contatti)
-            {
-                if (!contatto.nome.empty() && contatto.nome[0] == letteraIniziale)
-                {
-                    rubricaFiltrata.push_back(contatto);
-                }
-            }
-            break;
-
-        case 2:
-            int numElementi;
-            cout << endl
-                 << "Inserisci il numero di elementi per il filtro: ";
-            cin >> numElementi;
-
-            int count = 0;
-            for (const auto &contatto : contatti)
+            if (filter.accept(contatto))
             {
                 rubricaFiltrata.push_back(contatto);
-                count++;
-                if (count >= numElementi)
-                {
-                    break;
-                }
             }
-            break;
-        }
-
-        if (scelta < 1 || scelta > 2)
-        {
-            cout << "Scelta non valida." << endl;
         }
 
         return rubricaFiltrata;
@@ -87,10 +64,33 @@ public:
         {
             out << "Nome: " << contatto.nome << endl
                 << "Cognome: " << contatto.cognome << endl
-                << "Numero di Telefono: " << contatto.numTelefono << endl
+                << "Numero di Telefono: " << contatto.prefisso << " " << contatto.numTelefono << endl
                 << "----------------------------------" << endl;
         }
         return out;
+    }
+};
+
+class FirstLetterFilter : public AbstractFilter
+{
+private:
+    char letteraIniziale;
+
+public:
+    FirstLetterFilter(char lettera) : letteraIniziale(lettera) {}
+
+    bool accept(const Contact &contatto) const override
+    {
+        return !contatto.nome.empty() && contatto.nome[0] == letteraIniziale;
+    }
+};
+
+class ItalianPrefixFilter : public AbstractFilter
+{
+public:
+    bool accept(const Contact &contatto) const override
+    {
+        return contatto.prefisso == "+39";
     }
 };
 
@@ -103,67 +103,75 @@ int main()
     // Aggiungo contatti
     Contact newContatto;
 
-    do
-    {
-        cout << endl
-             << "Vuoi inserire un nuovo contatto? (1-si, 2-no): ";
-        cin >> scelta;
-        if (scelta == 1)
-        {
-            cout << "Nome: ";
-            cin >> newContatto.nome;
-            cout << "Cognome: ";
-            cin >> newContatto.cognome;
-            cout << "Numero di Telefono: ";
-            cin >> newContatto.numTelefono;
-
-            rubrica.append(newContatto);
-        }
-
-    } while (scelta == 1);
-
-    // Ricerca contatto per nome
-    string nomeCercato;
-
-    cout << endl
-         << "Quale contatto vuoi ricercare? (Inserisci il nome): ";
-    cin >> nomeCercato;
-
-    Contact *contattoTrovato = rubrica.find(nomeCercato);
-    if (contattoTrovato != nullptr)
-    {
-        cout << "[OK] Contatto trovato: " << contattoTrovato->nome << " " << contattoTrovato->cognome << " - " << contattoTrovato->numTelefono << endl
-             << endl;
-    }
-    else
-    {
-        cout << "[FAIL] Contatto non trovato." << endl
-             << endl;
-    }
-
-    // menu scelta filtro
-    cout << "Seleziona il tipo di filtro: " << endl;
-    cout << "|1) Filtra per prima lettera del nome" << endl;
-    cout << "|2) Filtra per numero di elementi" << endl;
-    cout << "Scelta: ";
-    cin >> scelta;
-
-    vector<Contact> rubFiltrata = rubrica.filter(scelta);
-
-    // Stampa rubrica filtrata
-    cout << endl
-         << "Rubrica Filtrata: " << endl;
-    cout << "----------------------------------" << endl;
-    for (const auto &contatto : rubFiltrata)
-    {
-        cout << contatto.nome << " " << contatto.cognome << " - " << contatto.numTelefono << endl;
-    }
+    rubrica.append({"Lorenzo", "Domina", "+39", "1112222333"});
+    rubrica.append({"Edoardo", "Gini", "+1", "2223333444"});
+    rubrica.append({"Luca", "Ottaviano", "+1", "3334444555"});
+    rubrica.append({"Gianni", "Valenti", "+39", "4445555666"});
 
     // Stampa rubrica completa
     cout << endl
          << "Rubrica:" << endl;
     cout << "----------------------------------" << endl;
     cout << rubrica;
+
+    {
+        // Ricerca contatto per nome
+        string nomeCercato;
+
+        cout << endl
+             << "Quale contatto vuoi ricercare? (Inserisci il nome): ";
+        cin >> nomeCercato;
+
+        Contact *contattoTrovato = rubrica.find(nomeCercato);
+        if (contattoTrovato != nullptr)
+        {
+            cout << "[OK] Contatto trovato: " << contattoTrovato->nome << " " << contattoTrovato->cognome << " - " << contattoTrovato->prefisso << " " << contattoTrovato->numTelefono << endl
+                 << endl;
+        }
+        else
+        {
+            cout << "[FAIL] Contatto non trovato." << endl
+                 << endl;
+        }
+    }
+
+    vector<Contact> rubFiltrata;
+
+    {
+        cout << "***** Filtraggio Rubrica per la prima lettera del nome *****" << endl;
+        char letteraIniziale;
+        cout << endl
+             << "Inserire la lettera iniziale per cui applicare il filtro: ";
+        cin >> letteraIniziale;
+
+        FirstLetterFilter filter(letteraIniziale);
+        rubFiltrata = rubrica.filter(filter);
+
+        // Stampa rubrica filtrata
+        cout << endl
+             << "Rubrica Filtrata: " << endl;
+        cout << "----------------------------------" << endl;
+        for (const auto &contatto : rubFiltrata)
+        {
+            cout << contatto.nome << " " << contatto.cognome << " - " << contatto.prefisso << " " << contatto.numTelefono << endl;
+        }
+    }
+
+    {
+        cout << endl
+             << "***** Filtraggio Rubrica per prefisso +39 *****" << endl;
+        ItalianPrefixFilter filter;
+        rubFiltrata = rubrica.filter(filter);
+
+        // Stampa rubrica filtrata
+        cout << endl
+             << "Rubrica Filtrata: " << endl;
+        cout << "----------------------------------" << endl;
+        for (const auto &contatto : rubFiltrata)
+        {
+            cout << contatto.nome << " " << contatto.cognome << " - " << contatto.prefisso << " " << contatto.numTelefono << endl;
+        }
+    }
 
     return 0;
 }
