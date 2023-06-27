@@ -2,7 +2,8 @@
 
 using namespace std;
 
-class Date {
+class Date
+{
 private:
     int dd;
     int mm;
@@ -10,14 +11,16 @@ private:
 
 public:
     // Costruttore di default
-    Date() {
+    Date()
+    {
         dd = 1;
         mm = 1;
         yyyy = 1970;
     }
 
     // Costruttore con parametri
-    Date(int day, int month, int year) {
+    Date(int day, int month, int year)
+    {
         dd = day;
         mm = month;
         yyyy = year;
@@ -29,30 +32,35 @@ public:
     int year() const { return yyyy; }
 
     // Operatore di output '<<'
-    friend ostream& operator<<(ostream& os, const Date& date) {
+    friend ostream &operator<<(ostream &os, const Date &date)
+    {
         os << date.dd << "/" << date.mm << "/" << date.yyyy;
         return os;
     }
 
     // Operatore di confronto '=='
-    friend bool operator==(const Date& one, const Date& other) {
+    friend bool operator==(const Date &one, const Date &other)
+    {
         return (one.dd == other.dd && one.mm == other.mm && one.yyyy == other.yyyy);
     }
 
     // Metodo per aggiungere giorni
-    void addDays(int num_d) {
+    void addDays(int num_d)
+    {
         // Calcolo numero giorni nel mese corrente
         int giorniMese = getGiorniMese(mm, yyyy);
 
         dd += num_d;
 
-        // Controllo incremento mese 
-        while (dd > giorniMese) {
+        // Controllo incremento mese
+        while (dd > giorniMese)
+        {
             dd -= giorniMese;
             mm++;
 
-            // Controllo incremento anno 
-            if (mm > 12) {
+            // Controllo incremento anno
+            if (mm > 12)
+            {
                 mm = 1;
                 yyyy++;
             }
@@ -62,11 +70,13 @@ public:
     }
 
     // Metodo per aggiungere mesi
-    void addMonths(int num_m) {
+    void addMonths(int num_m)
+    {
         mm += num_m;
 
         // Controllo incremento anno
-        while (mm > 12) {
+        while (mm > 12)
+        {
             mm -= 12;
             yyyy++;
         }
@@ -78,7 +88,8 @@ public:
     }
 
     // Metodo per aggiungere anni
-    void addYears(int num_y) {
+    void addYears(int num_y)
+    {
         yyyy += num_y;
 
         // Controllo lim numero giorni nel mese corrente
@@ -88,23 +99,25 @@ public:
     }
 
 private:
-    // Funzione per ottenere numero di giorni in un mese 
-    int getGiorniMese(int month, int year) const {
+    // Funzione per ottenere numero di giorni in un mese
+    int getGiorniMese(int month, int year) const
+    {
         static const int giorniMese[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
         // Gestione anni bisestili
         if (month == 2 && (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)))
             return 29;
-        
+
         return giorniMese[month - 1];
     }
 };
 
-int main() {
+int main()
+{
     Date dataDefault;
     cout << "Data di Default: " << dataDefault << endl;
 
-    Date dataCustom(20, 6, 2023);  
+    Date dataCustom(20, 6, 2023);
     cout << "Data Customizzata: " << dataCustom << endl;
 
     // Prove di funzionamento dei metodi addDays(), addMonths(), addYears()
@@ -112,71 +125,86 @@ int main() {
         int testDay = 10;
 
         dataCustom.addDays(testDay);
-        if(dataCustom.day() != 30) {
+        if (dataCustom.day() != 30)
+        {
             cout << "[FAIL] addDays(10)" << endl;
-        } else {
+        }
+        else
+        {
             cout << "[OK] addDays(10): " << dataCustom << endl;
         }
     }
-    
+
     {
         int testMonth = 2;
 
         dataCustom.addMonths(testMonth);
-        if(dataCustom.month() != 8) {
+        if (dataCustom.month() != 8)
+        {
             cout << "[FAIL] addMonths(2)" << endl;
-        } else {
+        }
+        else
+        {
             cout << "[OK] addMonths(2): " << dataCustom << endl;
         }
     }
-    
+
     {
         int testYear = -1;
 
         dataCustom.addYears(testYear);
-        if(dataCustom.year()!=2022) {
+        if (dataCustom.year() != 2022)
+        {
             cout << "[FAIL] addYears(-1)" << endl;
-        } else {
+        }
+        else
+        {
             cout << "[OK] addYears(-1): " << dataCustom << endl;
-        }   
+        }
     }
-    
-    Date dataCustom2(28, 2,2023);
-    cout << "Data Customizzata 2: " << dataCustom2 << endl;
-    {
-        int testDay2 = 1;
 
-        dataCustom2.addDays(testDay2);
-        if(dataCustom2.day() != 1 || dataCustom2.month() != 3 || dataCustom2.year() != 2023) {
+    {
+        Date dataCustom2(28, 2, 2023);
+        cout << "Data Customizzata 2: " << dataCustom2 << endl;
+
+        dataCustom2.addDays(1);
+        if (dataCustom2.day() != 1 || dataCustom2.month() != 3 || dataCustom2.year() != 2023)
+        {
             cout << "[FAIL] addDays(1)" << endl;
-        } else {
+        }
+        else
+        {
             cout << "[OK] addDays(1): " << dataCustom2 << endl;
         }
     }
 
-    Date dataCustom3(31, 1, 2023);
-    cout << "Data Customizzata 3: " << dataCustom2 << endl;
     {
-        int testMonth3 = 1;
+        Date dataCustom2(31, 1, 2023);
+        cout << "Data Customizzata 3: " << dataCustom2 << endl;
 
-        dataCustom3.addMonths(testMonth3);
-        if(dataCustom3.day() != 28 || dataCustom3.month() != 2 || dataCustom3.year() != 2023) {
+        dataCustom2.addMonths(1);
+        if (dataCustom2.day() != 28 || dataCustom2.month() != 2 || dataCustom2.year() != 2023)
+        {
             cout << "[FAIL] addMonths(1)" << endl;
-        } else {
-            cout << "[OK] addMonths(1): " << dataCustom3 << endl;
+        }
+        else
+        {
+            cout << "[OK] addMonths(1): " << dataCustom2 << endl;
         }
     }
 
-    Date dataCustom4(31, 8, 2023);
-    cout << "Data Customizzata 4: " << dataCustom4 << endl;
     {
-        int testMonth4 = 3;
+        Date dataCustom2(31, 8, 2023);
+        cout << "Data Customizzata 4: " << dataCustom2 << endl;
 
-        dataCustom4.addMonths(testMonth4);
-        if(dataCustom4.day() != 30 || dataCustom4.month() != 11 || dataCustom4.year() != 2023) {
+        dataCustom2.addMonths(3);
+        if (dataCustom2.day() != 30 || dataCustom2.month() != 11 || dataCustom2.year() != 2023)
+        {
             cout << "[FAIL] addMonths(3)" << endl;
-        } else {
-            cout << "[OK] addMonths(3): " << dataCustom4 << endl;
+        }
+        else
+        {
+            cout << "[OK] addMonths(3): " << dataCustom2 << endl;
         }
     }
 
