@@ -6,8 +6,10 @@ Rectangle {
     width: 100
     height: 50
     color: checked ? "#00CC00" : "#CCCCCC"
-    border.color: checked ? "#269839" : "#707070"
-    border.width: 1.5
+    border {
+        color: checked ? "#269839" : "#707070"
+        width: 1.5
+    }
     radius: 10
 
     Behavior on color {
@@ -19,8 +21,10 @@ Rectangle {
     Text {
         anchors.fill: parent
         text: checked ? "ON" : "OFF"
-        font.family: "nunito"
-        font.pointSize: 12
+        font {
+            family: "nunito"
+            pointSize: 12
+        }
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         color: checked ? "white" : "black"
