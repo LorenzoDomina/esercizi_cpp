@@ -5,8 +5,6 @@ Column {
     spacing: 10
 
     Repeater {
-        property var percentages: [Math.random(), Math.random(), Math.random(
-                ), Math.random(), Math.random()]
         model: 5
         delegate: Bar {
             width: parent.width
