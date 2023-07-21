@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>assets/clock-switch-on-selected.png</file>
+        <file>assets/clock-switch-on-disable.png</file>
+        <file>assets/clock-switch-off-selected.png</file>
+        <file>assets/clock-switch-off-disable.png</file>
+        <file>assets/btn-back-hover.svg</file>
+        <file>assets/btn-back-active.svg</file>
+        <file>assets/btn-arrow-hover.svg</file>
+        <file>assets/btn-arrow-active.svg</file>
+        <file>assets/alarm-on-feedback.svg</file>
+        <file>assets/alarm-off-feedback.svg</file>
+    </qresource>
+</RCC>
